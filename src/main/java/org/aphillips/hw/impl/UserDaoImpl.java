@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.aphillips.hw.api.UserDao;
 import org.aphillips.hw.domain.User;
+import org.aphillips.hw.domain.UserValidator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
@@ -26,6 +27,10 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public void saveUser(User user) {
+    
+    UserValidator v = new UserValidator(user);
+    v.validate();
+    
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     final Serializable id = session.save(user);
@@ -55,4 +60,6 @@ public class UserDaoImpl implements UserDao {
     return (User)results.get(0);
 
   }
+  
+
 }

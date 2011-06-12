@@ -20,17 +20,11 @@ import com.sun.jersey.test.framework.JerseyTest;
 import com.sun.jersey.test.framework.WebAppDescriptor;
 import com.sun.jersey.test.framework.spi.container.grizzly.GrizzlyTestContainerFactory;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(locations = { "test-context.xml" })
 public class UserResourceTest extends JerseyTest {
-
-  //  private static WebAppDescriptor webAppDescriptor = new WebAppDescriptor.Builder(
-  //      "org.aphillips.hw.impl").contextPath("api").build();
 
   private static WebAppDescriptor webAppDescriptor = new WebAppDescriptor.Builder()
       .contextPath("api").contextParam("contextConfigLocation", "classpath:**/test-context.xml")
       .requestListenerClass(RequestContextListener.class)
-//      .contextListenerClass(ContextLoaderListener.class)
       .servletClass(SpringServlet.class).contextListenerClass(ContextLoaderListener.class).build();
 
   public UserResourceTest() throws Exception {
@@ -70,6 +64,6 @@ public class UserResourceTest extends JerseyTest {
     assertEquals("Id doesn't match", requestedId, retrievedUser.getId());
     assertEquals("First name doesn't match", testUser.getFirstName(), retrievedUser.getFirstName());
 
-    //TODO make sure users completely match
+    //We don't need to check the entire User here since that is covered by the DAO test
   }
 }
