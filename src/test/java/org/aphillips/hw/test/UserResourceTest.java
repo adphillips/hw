@@ -60,10 +60,14 @@ public class UserResourceTest extends JerseyTest {
 
     // Now retrieve the user
 
-    String pathLessApp = path.substring(path.indexOf('/'));
+    final String pre = "/api/";
+    final String pathLessApp = path.substring(path.indexOf(pre)+pre.length());
+    final Long requestedId = Long.parseLong(path.substring(path.lastIndexOf('/')+1));
+    
     response = webResource.path(pathLessApp).accept(APPLICATION_XML).get(ClientResponse.class);
-    assertResponse(response, Status.CREATED, APPLICATION_XML);
+    assertResponse(response, Status.OK, APPLICATION_XML);
     final User retrievedUser = response.getEntity(User.class);
+    assertEquals("Id doesn't match", requestedId, retrievedUser.getId());
     assertEquals("First name doesn't match", testUser.getFirstName(), retrievedUser.getFirstName());
 
     //TODO make sure users completely match

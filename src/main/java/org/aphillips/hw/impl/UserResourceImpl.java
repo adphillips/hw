@@ -47,16 +47,19 @@ public class UserResourceImpl implements UserResource {
     return Response.status(Status.CREATED).location(uri).build();
   }
 
-  public User readUser(String id) {
-    // TODO Auto-generated method stub
+  public User readUser(Long id) {
+    User user = userDao.readUser(id);
+    if(user == null) {
+      throw new WebApplicationException(Response.Status.NOT_FOUND);
+    }
+    return user;
+  }
+
+  public User readUserXml(Long id) {
     throw new WebApplicationException(Response.Status.NOT_FOUND);
   }
 
-  public User readUserXml(String id) {
-    throw new WebApplicationException(Response.Status.NOT_FOUND);
-  }
-
-  public User readUserJson(String id) {
+  public User readUserJson(Long id) {
     throw new WebApplicationException(Response.Status.NOT_FOUND);
   }
 

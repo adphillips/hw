@@ -33,7 +33,7 @@ public interface UserResource {
    */
   @Path("{id}")
   @GET
-  User readUser(@PathParam("id") String id);
+  User readUser(@PathParam("id") Long id);
   
   //
   // The following are compatibility endpoints for clients who cannot 
@@ -43,11 +43,11 @@ public interface UserResource {
   @Path("{id}.xml")
   @GET
   @Produces({APPLICATION_XML})
-  User readUserXml(@PathParam("id") String id);
+  User readUserXml(@PathParam("id") Long id);
   
   @Path("{id}.json")
   @GET
   @Produces({APPLICATION_JSON})
-  User readUserJson(@PathParam("id") String id);
+  User readUserJson(@PathParam("id") Long id);
 
 }
