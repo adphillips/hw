@@ -39,6 +39,7 @@ public class UserResourceImpl implements UserResource {
     
     URI uri;
     try {
+      //FIXME set this path based on servlet context, not hardcoded
       uri = new URI("http://localhost/api/users/"+user.getId());
     } catch (URISyntaxException e) {
       //unchecked exceptions are the way to go
