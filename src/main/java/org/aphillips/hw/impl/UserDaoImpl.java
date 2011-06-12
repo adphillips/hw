@@ -41,6 +41,7 @@ public class UserDaoImpl implements UserDao {
     User example = new User();
     example.setId(id);
 
+    //FIXME: the example id value is not being used for some reason, we are getting back all users
     List results = session.createCriteria(User.class).add(Example.create(example)).list();
     if(results.size() < 1) {
       return null;
