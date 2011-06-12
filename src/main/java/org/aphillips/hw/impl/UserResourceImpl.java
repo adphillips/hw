@@ -27,13 +27,7 @@ public class UserResourceImpl implements UserResource {
     this.userDao = userDao;
   }
 
-//  public Collection loadProductsByCategory(String category) {
-//      return this.sessionFactory.getCurrentSession()
-//              .createQuery("from test.Product product where product.category=?")
-//              .setParameter(0, category)
-//              .list();
-//  }
-
+  @Override
   public Response createUser(User user) {
     userDao.saveUser(user);
     
@@ -48,6 +42,7 @@ public class UserResourceImpl implements UserResource {
     return Response.status(Status.CREATED).location(uri).build();
   }
 
+  @Override
   public User readUser(Long id) {
     User user = userDao.readUser(id);
     if(user == null) {

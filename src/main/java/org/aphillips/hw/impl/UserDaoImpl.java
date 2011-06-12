@@ -24,27 +24,17 @@ public class UserDaoImpl implements UserDao {
     this.sessionFactory = sessionFactory;
   }
 
-  //  public Collection loadProductsByCategory(String category) {
-  //      return this.sessionFactory.getCurrentSession()
-  //              .createQuery("from test.Product product where product.category=?")
-  //              .setParameter(0, category)
-  //              .list();
-  //  }
-
-  /* (non-Javadoc)
-   * @see org.aphillips.hw.impl.UserDao#saveUser(org.aphillips.hw.domain.User)
-   */
+  @Override
   public void saveUser(User user) {
     Session session = sessionFactory.openSession();
     session.beginTransaction();
     final Serializable id = session.save(user);
     session.getTransaction().commit();
+    //FIXME close session in finally or use spring transactions
     session.close();
   }
 
-  /* (non-Javadoc)
-   * @see org.aphillips.hw.impl.UserDao#readUser(java.lang.String)
-   */
+  @Override
   public User readUser(Long id) {
     Session session = sessionFactory.openSession();
 
@@ -58,6 +48,9 @@ public class UserDaoImpl implements UserDao {
     if(results.size() > 1) {
       throw new IllegalStateException(MessageFormat.format("Somehow we have more than one user with id {0}", id));
     }
+    //FIXME close session in finally or use spring transactions
+    session.close();
+    
     return (User)results.get(0);
 
   }
