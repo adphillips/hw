@@ -1,5 +1,8 @@
 package org.aphillips.hw.test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.util.Calendar;
 
 import org.aphillips.hw.api.UserDao;
@@ -34,6 +37,15 @@ public class UserDaoTest {
     userDao.saveUser(testUser);
     Assert.assertNotNull("Userid not null, a save error must have occurred", testUser.getId());
     Assert.assertTrue("Id should not greater than zero", testUser.getId() > 0L);
+    
+    User retrievedUser = userDao.readUser(testUser.getId());
+    assertNotNull("Retrieved user is null", retrievedUser);
+    assertEquals("First name doesn't match", testUser.getFirstName(), retrievedUser.getFirstName());
+    assertEquals("Last name doesn't match", testUser.getLastName(), retrievedUser.getLastName());
+    assertEquals("Phone doesn't match", testUser.getPhone(), retrievedUser.getPhone());
+    assertEquals("Email doesn't match", testUser.getEmail(), retrievedUser.getEmail());
+    assertEquals("Date of Birth doesn't match", testUser.getDob(), retrievedUser.getDob());
+    
   }
   
   

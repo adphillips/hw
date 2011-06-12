@@ -6,6 +6,6 @@ public interface UserDao {
 
   void saveUser(User user);
 
-  User readUser(String id);
+  User readUser(Long id);
 
 }
