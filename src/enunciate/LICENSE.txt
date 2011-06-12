@@ -1,0 +1,2 @@
+This is the license file for hw.  You are free
+to access our API as long as you agree to give up your privacy.

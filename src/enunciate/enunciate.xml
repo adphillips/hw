@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<enunciate label="hw" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.22.xsd">
+	<modules>
+		<c disabled="true" />
+		<csharp disabled="true" />
+		<obj-c disabled="true" />
+		<java-client disabled="true" />
+		<!-- Docs -->
+		<docs splashPackage="org.aphillips.hw.api" title="hw" copyright="Example.com">
+			<download name="License" file="LICENSE.txt"
+				description="The license file governing the use of this API." />
+		</docs>
+	</modules>
+</enunciate>
