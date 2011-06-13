@@ -15,13 +15,13 @@ the USERS table like so:
       PRIMARY KEY (`id`)
     );
 
-To test this app in a browser
-=============================
+Testing HW
+==========
 
 mvn jetty:run which will run the webapp on http://localhost:8080/hw
 
-To create a user
-================
+Create a user
+-------------
 
 curl -X POST -H "Content-Type: application/xml" -d '{validUserXmlGoesHere}' http://localhost:8080/hw/api/users
 
@@ -36,8 +36,9 @@ Where you supply some valid user XML like:
     </user>
 
 
-To retrieve data on a user
-==========================
+Retrieve user info
+------------------
+
 curl http://localhost:8080/hw/api/users/{id} | xmllint --format -
 
 where {id} is the numeric unique ID of the user in the system, e.g. 2
