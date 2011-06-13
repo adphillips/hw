@@ -28,7 +28,9 @@ where {id} is the numeric unique ID of the user in the system, e.g. 2
 
 To debug this application
 =========================
-run debug.sh or:
+run debug.sh or..
+
 # MAVEN_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,address=4000,server=y,suspend=y"
 # mvn jetty:run
+
 then attache a remote debugger such as with a remote debugging profile (in Eclipse)
