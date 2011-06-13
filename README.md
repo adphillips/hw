@@ -35,3 +35,7 @@ run debug.sh or..
 2. mvn jetty:run
 
 then attach a remote debugger such as with a remote debugging profile (in Eclipse)
+
+To build and test
+=================
+This is a typical war maven project, so mvn package and mvn test
