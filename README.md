@@ -9,6 +9,7 @@ To create a user
 curl -X POST -H "Content-Type: application/xml" -d '{validUserXmlGoesHere}' http://localhost:8080/hw/api/users
 
 Where you supply some valid user XML like:
+
     <user>
       <dob>1965-05-01T00:00:00-04:00</dob>
       <email>blumberg@innitek.com</email>
