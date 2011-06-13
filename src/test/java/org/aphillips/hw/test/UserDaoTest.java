@@ -41,14 +41,10 @@ public class UserDaoTest {
 
   }
 
-  /*
-  Rules for user creation:
-    At least one of the following fields must exist: First Name, Last Name, Email Address, or Phone Number
-    First and Last Name must be alpha-characters only
-    Email Address must be real email address
-    Phone Number can accept any of the following characters: ()-.0-9
-    Birthday must be an actual date, and in the past. "Actual date" means no Feb 31, for example.
-    */
+  //
+  // Validation tests: Arguably these could go in a UserValidatorTest but for the sake of 
+  // a bit of piece of mind integration tests, i stuck them here
+  //
 
   private User getValidBaseUser() {
     final User testUser = new User();
@@ -76,7 +72,7 @@ public class UserDaoTest {
     //just check that this does not throw a validation error
   }
   
-  
+
 
   @Test(expected = ValidationError.class)
   public void testCreateUserNonAlphaInFirstName() {
@@ -99,11 +95,10 @@ public class UserDaoTest {
     userDao.saveUser(user);
   }
   
-  //()-.0-9
   @Test
   public void testCreateUserPhoneFormat1() {
     User user = getValidBaseUser();
-    user.setPhone("(555)-111-2222");
+    user.setPhone("(012)-345-6789");
     userDao.saveUser(user);
     Assert.assertNotNull("Userid not null, a save error must have occurred", user.getId());
     Assert.assertTrue("Id should not greater than zero", user.getId() > 0L);
@@ -135,7 +130,7 @@ public class UserDaoTest {
   }
   
   @Test(expected=ValidationError.class)
-  public void testCreateUserBadDoB() {
+  public void testCreateUserDobTooRecent() {
     User user = getValidBaseUser();
     //date must be in the past so this should fail
     user.setDob(new Date());

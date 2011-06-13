@@ -5,7 +5,6 @@ import junit.framework.AssertionFailedError;
 
 import com.sun.jersey.api.client.ClientResponse;
 
-@SuppressWarnings("nls")
 public class JerseyTestUtil {
 
   protected static void assertResponse(ClientResponse response, ClientResponse.Status expectedStatus) {

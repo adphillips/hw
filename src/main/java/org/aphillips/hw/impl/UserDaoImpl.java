@@ -44,9 +44,6 @@ public class UserDaoImpl implements UserDao {
   public User readUser(Long id) {
     Session session = sessionFactory.openSession();
 
-    User example = new User();
-    example.setId(id);
-
     Query q = session.createQuery("from User where id = :id");
     q.setLong("id", id);
     @SuppressWarnings("rawtypes")

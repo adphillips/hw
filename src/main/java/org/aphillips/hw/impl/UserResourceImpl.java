@@ -28,9 +28,6 @@ public class UserResourceImpl implements UserResource {
 
   private UserDao userDao;
 
-//  @javax.ws.rs.core.Context
-//  private ServletContext context;
-  
   @javax.ws.rs.core.Context 
   private HttpServletRequest request;
 

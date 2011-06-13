@@ -24,7 +24,7 @@ import com.sun.jersey.test.framework.spi.container.grizzly.GrizzlyTestContainerF
 public class UserResourceTest extends JerseyTest {
 
   private static WebAppDescriptor webAppDescriptor = new WebAppDescriptor.Builder()
-      .contextPath("api").contextParam("contextConfigLocation", "classpath:**/test-context.xml")
+      .contextPath("hw/api").contextParam("contextConfigLocation", "classpath:**/test-context.xml")
       .requestListenerClass(RequestContextListener.class)
       .servletClass(SpringServlet.class).contextListenerClass(ContextLoaderListener.class).build();
 
@@ -34,7 +34,7 @@ public class UserResourceTest extends JerseyTest {
   }
 
   @Test
-  public void testCreateUser() {
+  public void testCreateAndRetrieveUser() {
     WebResource webResource = resource();
 
     // First, create the user
@@ -51,7 +51,7 @@ public class UserResourceTest extends JerseyTest {
     ClientResponse response = webResource.path("users/").type(APPLICATION_XML).post(ClientResponse.class, testUser);
     assertResponse(response, Status.CREATED);
     String path = response.getLocation().getPath();
-    assertTrue("Location URI \""+ path +"\"is incorrect", path.matches("/api/users/[0-9]+"));
+    assertTrue("Location URI \""+ path +"\"is incorrect", path.matches("/hw/api/users/[0-9]+"));
 
     // Now retrieve the user
 
@@ -68,9 +68,10 @@ public class UserResourceTest extends JerseyTest {
     //We don't need to check the entire User here since that is covered by the DAO test
   }
   
+  //This scenario of providing a bogus calendar date results in a null date field and not a validation error
   @Ignore
   @Test
-  public void testInvalidDateOfBirth() {
+  public void testCreateUser_BadRequestOnInvalidDateOfBirth() {
     WebResource webResource = resource();
 
     String xml = "<user><dob>1965-02-31</dob><email>xmltest@innitek.com</email><firstName>Bill</firstName><id>2</id><lastName>Lumberg</lastName><phone>555-444-4321</phone></user>";
@@ -79,7 +80,7 @@ public class UserResourceTest extends JerseyTest {
   }
   
   @Test
-  public void testInvalidName() {
+  public void testCreateUser_BadRequestOnValidationFailure() {
     WebResource webResource = resource();
     
     final User testUser = new User();
@@ -88,5 +89,13 @@ public class UserResourceTest extends JerseyTest {
     
     ClientResponse response = webResource.path("users/").type(APPLICATION_XML).post(ClientResponse.class, testUser);
     assertResponse(response, Status.BAD_REQUEST);
+  }
+  
+  @Test
+  public void testUserDNE() {
+    WebResource webResource = resource();
+    Long requestedId = Long.MAX_VALUE;
+    ClientResponse response = webResource.path("/users/"+requestedId).accept(APPLICATION_XML).get(ClientResponse.class);
+    assertResponse(response, Status.NOT_FOUND);
   }
 }
