@@ -13,7 +13,7 @@ the USERS table like so:
       `lastName` varchar(20) DEFAULT NULL,
       `phone` varchar(12) DEFAULT NULL,
       PRIMARY KEY (`id`)
-    )
+    );
 
 To test this app in a browser
 =============================
