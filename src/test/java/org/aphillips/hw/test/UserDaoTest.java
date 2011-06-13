@@ -24,7 +24,7 @@ public class UserDaoTest {
   private UserDao userDao;
 
   @Test
-  public void testCreateUser() {
+  public void testCreateAndReadUser() {
 
     final User testUser = getValidBaseUser();
     userDao.saveUser(testUser);
@@ -72,7 +72,6 @@ public class UserDaoTest {
     //just check that this does not throw a validation error
   }
   
-
 
   @Test(expected = ValidationError.class)
   public void testCreateUserNonAlphaInFirstName() {
