@@ -67,11 +67,11 @@ public class UserResourceImpl implements UserResource {
   }
 
   public User readUserXml(Long id) {
-    throw new WebApplicationException(Response.Status.NOT_FOUND);
+    return readUser(id);
   }
 
   public User readUserJson(Long id) {
-    throw new WebApplicationException(Response.Status.NOT_FOUND);
+    return readUser(id);
   }
 
 }
