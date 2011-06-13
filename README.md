@@ -1,3 +1,20 @@
+First thing before you can do anything
+======================================
+
+Setup a new database called 'hw' on your mysql (or other) RDBMS and modify
+src/main/resources/applicationContext.xml accordingly.  Next create
+the USERS table like so:
+
+    CREATE TABLE `USERS` (
+      `id` bigint(20) NOT NULL AUTO_INCREMENT,
+      `dob` date DEFAULT NULL,
+      `email` varchar(50) DEFAULT NULL,
+      `firstName` varchar(20) DEFAULT NULL,
+      `lastName` varchar(20) DEFAULT NULL,
+      `phone` varchar(12) DEFAULT NULL,
+      PRIMARY KEY (`id`)
+    )
+
 To test this app in a browser
 =============================
 
