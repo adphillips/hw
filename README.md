@@ -1,5 +1,4 @@
 
-
 To test this app in a browser
 =============================
 
@@ -24,6 +23,7 @@ Where you supply some valid user XML like:
 To retrieve data on a user
 ==========================
 curl http://localhost:8080/hw/api/users/{id} | xmllint --format -
+
 where {id} is the numeric unique ID of the user in the system, e.g. 2
 
 
