@@ -28,7 +28,7 @@ curl -X POST -H "Content-Type: application/xml" -d '{validUserXmlGoesHere}' http
 Where you supply some valid user XML like:
 
     <user>
-      <dob>1965-05-01T00:00:00-04:00</dob>
+      <dob>1965-05-01</dob>
       <email>blumberg@innitek.com</email>
       <firstName>Bill</firstName>
       <id>2</id>
