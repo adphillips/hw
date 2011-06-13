@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 
 import org.aphillips.hw.domain.User;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.request.RequestContextListener;
@@ -65,5 +66,27 @@ public class UserResourceTest extends JerseyTest {
     assertEquals("First name doesn't match", testUser.getFirstName(), retrievedUser.getFirstName());
 
     //We don't need to check the entire User here since that is covered by the DAO test
+  }
+  
+  @Ignore
+  @Test
+  public void testInvalidDateOfBirth() {
+    WebResource webResource = resource();
+
+    String xml = "<user><dob>1965-02-31</dob><email>xmltest@innitek.com</email><firstName>Bill</firstName><id>2</id><lastName>Lumberg</lastName><phone>555-444-4321</phone></user>";
+    ClientResponse response = webResource.path("users/").type(APPLICATION_XML).post(ClientResponse.class, xml);
+    assertResponse(response, Status.BAD_REQUEST);
+  }
+  
+  @Test
+  public void testInvalidName() {
+    WebResource webResource = resource();
+    
+    final User testUser = new User();
+    testUser.setFirstName("50");
+    testUser.setLastName("cent");
+    
+    ClientResponse response = webResource.path("users/").type(APPLICATION_XML).post(ClientResponse.class, testUser);
+    assertResponse(response, Status.BAD_REQUEST);
   }
 }

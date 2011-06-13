@@ -23,20 +23,20 @@ public class UserValidator {
   */
   public void validate() {
     if (StringUtils.isEmpty(user.getFirstName()) && StringUtils.isEmpty(user.getLastName())
-        || StringUtils.isEmpty(user.getPhone())) {
+        && StringUtils.isEmpty(user.getPhone())) {
       throw new ValidationError("Insufficent data to create user");
     }
 
     if (user.getFirstName() != null) {
       if (!StringUtils.isAlpha(user.getFirstName())) {
-        throw new ValidationError(MessageFormat.format("First name \"{0}\" must contain apha characters only",
+        throw new ValidationError(MessageFormat.format("First name \"{0}\" must contain alpha characters only",
             user.getFirstName()));
       }
     }
 
     if (user.getLastName() != null) {
       if (!StringUtils.isAlpha(user.getLastName())) {
-        throw new ValidationError(MessageFormat.format("Last name \"{0}\" must contain apha characters only",
+        throw new ValidationError(MessageFormat.format("Last name \"{0}\" must contain alpha characters only",
             user.getLastName()));
       }
     }
