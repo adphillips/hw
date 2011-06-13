@@ -7,9 +7,9 @@ import java.util.List;
 import org.aphillips.hw.api.UserDao;
 import org.aphillips.hw.domain.User;
 import org.aphillips.hw.domain.UserValidator;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Example;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -46,8 +46,12 @@ public class UserDaoImpl implements UserDao {
     User example = new User();
     example.setId(id);
 
-    //FIXME: the example id value is not being used for some reason, we are getting back all users
-    List results = session.createCriteria(User.class).add(Example.create(example)).list();
+    Query q = session.createQuery("from User where id = :id");
+    q.setLong("id", id);
+    @SuppressWarnings("rawtypes")
+    List results = q.list();
+    
+    
     if(results.size() < 1) {
       return null;
     }

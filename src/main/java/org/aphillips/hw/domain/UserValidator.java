@@ -55,7 +55,6 @@ public class UserValidator {
     }
 
     if (user.getDob() != null) {
-
       Calendar mostRecentLegalBirthDate = Calendar.getInstance();
       mostRecentLegalBirthDate.add(Calendar.YEAR, -18);
 
