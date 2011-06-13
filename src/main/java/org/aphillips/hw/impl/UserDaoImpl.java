@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public void saveUser(User user) {
+  public Long saveUser(User user) {
     
     UserValidator v = new UserValidator(user);
     v.validate();
@@ -37,6 +37,7 @@ public class UserDaoImpl implements UserDao {
     session.getTransaction().commit();
     //FIXME close session in finally or use spring transactions
     session.close();
+    return (Long)id;
   }
 
   @Override

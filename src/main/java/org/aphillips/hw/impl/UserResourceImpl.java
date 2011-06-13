@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Path;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
@@ -27,8 +28,11 @@ public class UserResourceImpl implements UserResource {
 
   private UserDao userDao;
 
-  @javax.ws.rs.core.Context
-  ServletContext context;
+//  @javax.ws.rs.core.Context
+//  private ServletContext context;
+  
+  @javax.ws.rs.core.Context 
+  private HttpServletRequest request;
 
   @Autowired
   public void setUserDao(UserDao userDao) {
@@ -46,10 +50,11 @@ public class UserResourceImpl implements UserResource {
 
     URI uri;
     try {
-      //FIXME set this path based on servlet context, not hardcoded
-      String contextPath = context.getContextPath();
-
-      uri = new URI("http://localhost" + contextPath + "/users/" + user.getId());
+      String requestUrl = request.getRequestURL().toString();
+      if(!requestUrl.endsWith("/")) {
+        requestUrl = requestUrl + "/";
+      }
+      uri = new URI(requestUrl + user.getId());
     } catch (URISyntaxException e) {
       //unchecked exceptions are the way to go
       throw new WebApplicationException(e);

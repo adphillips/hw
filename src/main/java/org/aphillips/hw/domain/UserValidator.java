@@ -2,6 +2,8 @@ package org.aphillips.hw.domain;
 
 import java.text.MessageFormat;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.aphillips.hw.impl.ValidationError;
@@ -15,11 +17,16 @@ public class UserValidator {
   }
 
   /**
-   * At least one of the following fields must exist: First Name, Last Name, Email Address, or Phone Number
-   * First and Last Name must be alpha-characters only
-   * Email Address must be real email address
-   * Phone Number can accept any of the following characters: ()-.0-9
-   * Birthday must be an actual date, and in the past. "Actual date" means no Feb 31, for example.
+   * This validate method seeks to satisfy the acceptance criteria for a valid user:
+   * <ul>
+   * <li>At least one of the following fields must exist: First Name, Last Name, Email Address, or Phone Number
+   * <li>First and Last Name must be alpha-characters only
+   * <li>Email Address must be real email address
+   * <li>Phone Number can accept any of the following characters: ()-.0-9
+   * <li>Birthday must be an actual date, and in the past. "Actual date" means no Feb 31, for example.
+   * </ul>
+   * NOTE: we cannot satisfy the "Actual date" criteria here since we are only dealing with Date 
+   * instances.
   */
   public void validate() {
     if (StringUtils.isEmpty(user.getFirstName()) && StringUtils.isEmpty(user.getLastName())
@@ -49,7 +56,13 @@ public class UserValidator {
     }
 
     if (user.getPhone() != null) {
-      if (!user.getPhone().matches("^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$")) {
+      Pattern datePatt = Pattern.compile("^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$");
+      Matcher m = datePatt.matcher(user.getPhone());
+      if (m.matches()) {
+        //time to normalize the phone number like so 555-555-5555
+        //kinda strange that a validator modifies the value, but seems the most efficient spot to do it
+        user.setPhone(m.group(1) + "-" + m.group(2) + "-" + m.group(3));
+      } else {
         throw new ValidationError(MessageFormat.format("Invalid phone \"{0}\"", user.getPhone()));
       }
     }

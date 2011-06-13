@@ -4,7 +4,7 @@ import org.aphillips.hw.domain.User;
 
 public interface UserDao {
 
-  void saveUser(User user);
+  Long saveUser(User user);
 
   User readUser(Long id);
 

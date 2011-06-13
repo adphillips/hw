@@ -75,6 +75,8 @@ public class UserDaoTest {
     getValidBaseUser();
     //just check that this does not throw a validation error
   }
+  
+  
 
   @Test(expected = ValidationError.class)
   public void testCreateUserNonAlphaInFirstName() {
@@ -94,6 +96,41 @@ public class UserDaoTest {
   public void testCreateUserBadEmail() {
     User user = getValidBaseUser();
     user.setEmail("emailwithnodomain.com");
+    userDao.saveUser(user);
+  }
+  
+  //()-.0-9
+  @Test
+  public void testCreateUserPhoneFormat1() {
+    User user = getValidBaseUser();
+    user.setPhone("(555)-111-2222");
+    userDao.saveUser(user);
+    Assert.assertNotNull("Userid not null, a save error must have occurred", user.getId());
+    Assert.assertTrue("Id should not greater than zero", user.getId() > 0L);
+  }
+  
+  @Test
+  public void testCreateUserPhoneFormat2() {
+    User user = getValidBaseUser();
+    user.setPhone("555 111 2222");
+    userDao.saveUser(user);
+    Assert.assertNotNull("Userid not null, a save error must have occurred", user.getId());
+    Assert.assertTrue("Id should not greater than zero", user.getId() > 0L);
+  }
+  
+  @Test
+  public void testCreateUserPhoneFormat3() {
+    User user = getValidBaseUser();
+    user.setPhone("555.111.2222");
+    userDao.saveUser(user);
+    Assert.assertNotNull("Userid not null, a save error must have occurred", user.getId());
+    Assert.assertTrue("Id should not greater than zero", user.getId() > 0L);
+  }
+  
+  @Test(expected=ValidationError.class)
+  public void testCreateUserBadPhone() {
+    User user = getValidBaseUser();
+    user.setPhone("[555]-111-2222");
     userDao.saveUser(user);
   }
   

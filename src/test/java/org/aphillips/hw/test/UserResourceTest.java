@@ -51,7 +51,7 @@ public class UserResourceTest extends JerseyTest {
     ClientResponse response = webResource.path("users/").type(APPLICATION_XML).post(ClientResponse.class, testUser);
     assertResponse(response, Status.CREATED);
     String path = response.getLocation().getPath();
-    assertTrue("Location URI is incorrect", path.matches("/api/users/[0-9]+"));
+    assertTrue("Location URI \""+ path +"\"is incorrect", path.matches("/api/users/[0-9]+"));
 
     // Now retrieve the user
 
