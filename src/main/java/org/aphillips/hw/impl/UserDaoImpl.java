@@ -1,6 +1,5 @@
 package org.aphillips.hw.impl;
 
-import java.io.Serializable;
 import java.text.MessageFormat;
 import java.util.List;
 
@@ -27,41 +26,48 @@ public class UserDaoImpl implements UserDao {
 
   @Override
   public Long saveUser(User user) {
-    
+
     UserValidator v = new UserValidator(user);
     v.validate();
-    
-    Session session = sessionFactory.openSession();
-    session.beginTransaction();
-    final Serializable id = session.save(user);
-    session.getTransaction().commit();
-    //FIXME close session in finally or use spring transactions
-    session.close();
-    return (Long)id;
+    Session session = null;
+    Long id = null;
+    try {
+      session = sessionFactory.openSession();
+      session.beginTransaction();
+      id = (Long) session.save(user);
+      session.getTransaction().commit();
+    } finally {
+      if (session != null)
+        session.close();
+    }
+
+    return (Long) id;
   }
 
   @Override
   public User readUser(Long id) {
-    Session session = sessionFactory.openSession();
-
-    Query q = session.createQuery("from User where id = :id");
-    q.setLong("id", id);
+    Session session = null;
     @SuppressWarnings("rawtypes")
-    List results = q.list();
-    
-    
-    if(results.size() < 1) {
-      return null;
+    List results = null;
+    try {
+      session = sessionFactory.openSession();
+
+      Query q = session.createQuery("from User where id = :id");
+      q.setLong("id", id);
+      results = q.list();
+
+      if (results.size() < 1) {
+        return null;
+      }
+      if (results.size() > 1) {
+        throw new IllegalStateException(MessageFormat.format("Somehow we have more than one user with id {0}", id));
+      }
+    } finally {
+      if (session != null)
+        session.close();
     }
-    if(results.size() > 1) {
-      throw new IllegalStateException(MessageFormat.format("Somehow we have more than one user with id {0}", id));
-    }
-    //FIXME close session in finally or use spring transactions
-    session.close();
-    
-    return (User)results.get(0);
+
+    return (User) results.get(0);
 
   }
-  
-
 }
